@@ -12,7 +12,7 @@ import xarray as xr
 
 
 "Path of the data to be analysed"
-path = '../data/'
+path = '../data/Old_data/'
 file_name = 'eNATL60GULFSTREAM-BLB002_y2009m08d01_hr.nc'
 data = xr.open_dataset(path+file_name)
 print(data)
