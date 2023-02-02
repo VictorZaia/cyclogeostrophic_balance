@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+
 """
-Created on Wed Jan 18 18:22:17 2023
+Inversion of the Cyclogeostrophic balance with JAX
 
 @author: victor
 """
@@ -9,10 +9,10 @@ Created on Wed Jan 18 18:22:17 2023
 import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
-
+import utils as ut
 
 "Path of the data to be analysed"
-path = '../data/Old_data/'
+path = 'D:/UGA/2 semestre/Research project/data/Old_data/'
 file_name = 'eNATL60GULFSTREAM-BLB002_y2009m08d01_hr.nc'
 data = xr.open_dataset(path+file_name)
 print(data)
@@ -30,7 +30,6 @@ v = data.somecrty.values[0,:,:]
 "Input data"
 g = 9.81 #[m/s2]
 coriolis = 2 * 7.2722e-05 * np.sin(lat * np.pi / 180)
-
 
 
 "Ploting functions"
@@ -51,3 +50,12 @@ def plot(u,v,ssh):
 
 
 fig = plot(u,v,SSH)
+
+"Computing the geostrophic balance"
+gradx_ssh, grady_ssh = ut.gradient(SSH, lon, lat)
+u_geos = - g * grady_ssh / coriolis
+v_geos =   g * gradx_ssh / coriolis
+
+"Plotting the geostrophic balance"
+fig = plot(u,u_geos,u - u_geos)
+fig = plot(v,v_geos,v - v_geos)
