@@ -1,6 +1,9 @@
 """Auxiliary functions used in several notebooks of the repo."""
 
 import numpy as np
+import jax.numpy as jnp
+from jax import grad, jit, vmap
+from jax import random
 
 # Geophysical parameter: Earth radius
 Earth_radius = 6370e3     # in meters
@@ -120,3 +123,17 @@ def cyclogeostrophy(ug, vg, coriolis, lon, lat, epsilon):
         #print('mask:',mask[20,25],'errsq_cor:',errsq[20,25],'max_error:',maxerr)
         #print('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ')
     return u_cg, v_cg, mask
+
+def derivative_jax(field, axis):
+    dfdx = 0
+    if axis == 0 or axis == None:
+        dfdx = grad(field)
+    elif axis ==1:
+        dfdx = grad(field, argnums=(1))
+    else:
+        print('Error: define the right variable to compute the derivate')
+    return dfdx
+
+def gradient_jax(field):
+    fx, fy = derivative_jax(field, lon, lat, axis=1), derivative(field, lon, lat, axis=0)
+    return fx, fy
