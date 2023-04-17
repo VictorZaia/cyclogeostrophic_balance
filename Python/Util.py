@@ -2,6 +2,7 @@
 """Packages"""
 
 import numpy as np
+import jax.numpy as jnp
 import matplotlib.pyplot as plt
 
 Earth_radius = 6370e3
@@ -32,15 +33,15 @@ def cyclogeostrophy(ug, vg, coriolis, lon, lat, epsilon):
         v_n = np.copy(v_cg)
         errsq_n = np.copy(errsq)
         advec_u, advec_v = advection(u_n,v_n,lon,lat)
-        u_np1 = ug - (1/coriolis)*advec_v
-        v_np1 = vg + (1/coriolis)*advec_u
-        errsq = np.square(u_np1-u_n) + np.square(v_np1-v_n)
+        u_jnp1 = ug - (1/coriolis)*advec_v
+        v_jnp1 = vg + (1/coriolis)*advec_u
+        errsq = np.square(u_jnp1-u_n) + np.square(v_jnp1-v_n)
         #print('Iteration process', 'n_iter:', n_iter, 'ug:', u_v[20,25], 'u_cg:', u_cg[20,25], 'errsq_e:', errsq_e[20,25], 'errsq:',errsq[20,25])
-        mask_np1 = np.where(errsq < arreps, 1, 0)
+        mask_jnp1 = np.where(errsq < arreps, 1, 0)
         mask_n = np.where(errsq > errsq_n, 1, 0)
-        u_cg = mask * u_n + (1-mask) * ( mask_n * u_n + (1-mask_n) * u_np1 )
-        v_cg = mask * v_n + (1-mask) * ( mask_n * v_n + (1-mask_n) * v_np1 )
-        mask = np.maximum(mask, np.maximum(mask_n, mask_np1))
+        u_cg = mask * u_n + (1-mask) * ( mask_n * u_n + (1-mask_n) * u_jnp1 )
+        v_cg = mask * v_n + (1-mask) * ( mask_n * v_n + (1-mask_n) * v_jnp1 )
+        mask = np.maximum(mask, np.maximum(mask_n, mask_jnp1))
         print((n_iter, np.where(mask==1)[0].shape, np.max(errsq)))
 
         #mask = np.where( (errsq < arreps) | (errsq>errsq_e), 0, 1) # elementwise OR condition
@@ -113,14 +114,13 @@ def compute_derivatives(field, lon, lat, axis):
         lat = (lat[:, 1:] + lat[:, :-1])/2
         dx = dx * Earth_radius * np.cos(lat*np.pi/180)
         dfdx = f/dx
-        #dfdx = np.c_[dfdx, np.zeros(len(dfdx))]
         
     if axis == 1:
         f = field[:-1, :] - field[1:, :]
         dx = (lat[:-1, :] - lat[1:, :]) * np.pi / 180     # in radian
         dx = dx * Earth_radius
         dfdx = f/dx
-        #dfdx = np.r_[dfdx, np.zeros([1,np.size(dfdx,1)])]
+
     return dfdx
 
 def compute_gradient(field, lon, lat):
@@ -186,9 +186,9 @@ def compute_advection_v(u, v, lon, lat):
     v_adv = interpolate_x(v_adv)
     v_adv = interpolate_y(v_adv)
     
-    u_adv = u_adv[1:-1,:]
+    u_adv = u_adv[:,1:-1]
     
-    adv_v = v_adv * dvdx + v_adv * dvdy
+    adv_v = u_adv * dvdx + v_adv * dvdy
     return adv_v
 
 def interpolate_y(field):
