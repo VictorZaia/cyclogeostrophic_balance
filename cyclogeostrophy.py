@@ -5,6 +5,7 @@ import numpy as np
 import jax.numpy as jnp
 from jax import grad, jit
 from functools import partial
+from tqdm import tqdm
 
 import geometry as geo
 
@@ -77,8 +78,8 @@ def gradient_descent(f, x_init, y_init, learning_rate = 0.01, num_iterations = 1
         x = x - learning_rate * grad_x(x,y)
         y = y - learning_rate * grad_y(x,y)
 
-        # print the current value of f and (x, y)
-        print("iteration {}: f(x, y) = {}".format(i, f(x, y)))
+    # print the final value of the loss at (x, y)
+    print("iteration {}: f(x, y) = {}".format(i, f(x, y)))
         
     return x, y
 
@@ -109,6 +110,6 @@ def gradient_descent_jax(f, x_init, y_init, num_iterations = 2000):
         # update x and y using gradient descent
         x,y = iteration(f,x,y)
 
-        # print the current value of f and (x, y)
-        print("iteration {}: loss(x, y) = {}".format(it, f(x, y)))   
+    # print the final value of the loss at (x, y)
+    print("iteration {}: loss(x, y) = {}".format(it, f(x, y)))   
     return x, y
