@@ -7,7 +7,7 @@ from jax import grad, jit
 from functools import partial
 from tqdm import tqdm
 
-import geometry as geo
+import Tools.geometry as geo
 
 # =============================================================================
 # Iterative method
@@ -102,14 +102,12 @@ def iteration(f,x,y):
 def gradient_descent_jax(f, x_init, y_init, num_iterations = 2000):
     
     x, y = x_init, y_init
-    it=0
         
-    while it < num_iterations:
-        it+=1
+    for it in tqdm(range(num_iterations)):
         
         # update x and y using gradient descent
         x,y = iteration(f,x,y)
 
     # print the final value of the loss at (x, y)
-    print("iteration {}: loss(x, y) = {}".format(it, f(x, y)))   
+    # print("iteration {}: loss(x, y) = {}".format(it, f(x, y)))   
     return x, y

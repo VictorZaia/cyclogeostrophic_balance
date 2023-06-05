@@ -2,7 +2,7 @@
 """Packages"""
 
 import numpy as np
-import geometry as geo
+import Tools.geometry as geo
 
 """Input data"""
 gravity = 9.81
