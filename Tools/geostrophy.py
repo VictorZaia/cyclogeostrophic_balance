@@ -12,7 +12,15 @@ gravity = 9.81
 # =============================================================================
 
 def geostrophy(ssh, dx_ssh, dy_ssh, coriolis_factor_u, coriolis_factor_v):
-    
+    """
+    Function that computes the geostrophic balance
+    Arguments:
+    ssh - sea surface height;
+    dx_ssh - spatial steps in x direction;
+    dy_ssh - spatial steps in y direction;
+    coriolis_factor_u - coriolis factor in the x direction measurement points;
+    coriolis_factor_v - coriolis factor in the y direction measurement points;
+    """
     # Computing the gradient of the ssh
     grad_ssh_x, grad_ssh_y = geo.compute_gradient(ssh, dx_ssh, dy_ssh)
     

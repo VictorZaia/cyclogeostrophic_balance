@@ -66,7 +66,15 @@ def cyclogeostrophy(ug, vg, coriolis_u, coriolis_v, lon_u, lat_u, lon_v, lat_v, 
 
 """Function without JAX"""
 def gradient_descent(f, x_init, y_init, learning_rate = 0.01, num_iterations = 1000):
-
+    """
+    Function that computes the cyclogeostrophic balance using the gradient descent algorithm
+    Arguments:
+    f - function that will be used to compute the gradient;
+    x_init - initial value in the x direction;
+    y_init - initial value in the y direction;
+    learning_rate - learning rate of the gradient descent algorithm;
+    num_iterations - number of iterations of the gradient descent algorithm;
+    """
     x, y = x_init, y_init
     
     # calculate the gradient of f at (x, y)
@@ -86,6 +94,13 @@ def gradient_descent(f, x_init, y_init, learning_rate = 0.01, num_iterations = 1
 """Function using JAX"""
 @partial(jit,static_argnums=(0))
 def iteration(f,x,y):
+    """
+    Function that computes one iteration of the gradient descent algoritm
+    Arguments:
+    f - function that will be used to compute the gradient;
+    x - value in the x direction;
+    y - value in the y direction;
+    """
     learning_rate = 0.005
     
     x_n = jnp.copy(x)
@@ -100,7 +115,14 @@ def iteration(f,x,y):
     return x_n,y_n
 
 def gradient_descent_jax(f, x_init, y_init, num_iterations = 2000):
-    
+    """
+    Function that computes the cyclogeostrophic balance using the gradient descent algorithm
+    Arguments:
+    f - function that will be used to compute the gradient;
+    x_init - initial value in the x direction;
+    y_init - initial value in the y direction;
+    num_iterations - number of iterations of the gradient descent algorithm;
+    """
     x, y = x_init, y_init
         
     for it in tqdm(range(num_iterations)):

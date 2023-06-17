@@ -148,6 +148,9 @@ def compute_advection_v(u, v, dx, dy):
 # =============================================================================
 
 def neuman_forward_jax(field, axis=0):
+    """
+    Apply Von Neuman boundary conditions to the field.
+    """
     f = jnp.copy(field)
     if axis == 0:
         f = f.at[-1,:].set(field[-2, :])
@@ -250,52 +253,13 @@ def compute_advection_v_jax(u, v, dx, dy):
 # Independent functions
 # =============================================================================
 
-def PlotGrid(lon,lat,lon_u,lat_u,lon_v,lat_v):
-    """
-    Function that splits the data and plot the C grid
-    
-    Arguments:
-    lon - longitude of the ssh
-    lat - latitude of the ssh
-    lon_u - longitude of the velocity in x direction
-    lat_u - latitude of the velocity in x direction
-    lon_v - longitude of the velocity in y direction
-    lat_v - latitude of the velocity in y direction
-    """
-    size = 5 # reduced size of the mesh to be ploted
-    
-    "Spliting the mesh"
-    a = lon[:size,:size]
-    b = lat[:size,:size]
-    c = lon_u[:size,:size]
-    d = lat_u[:size,:size]
-    e = lon_v[:size,:size]
-    f = lat_v[:size,:size]
-    
-    fig = plt.subplot()
-    for i in range(size):
-        fig.plot(c[:,i],d[:,i], color = 'black', linewidth=2, zorder=1)
-        fig.plot(e[i,:],f[i,:], color = 'black', linewidth=2, zorder=2)
-        
-    for i in range(size):
-        fig.plot(c[i,:],d[i,:], '--', color = 'black', linewidth=1, zorder=1)
-        fig.plot(e[:,i],f[:,i], '--', color = 'black', linewidth=1, zorder=2)
-        
-    fig.scatter(a,b, s=60,label='SSH', zorder=4)
-    fig.scatter(c,d, s=60, label='x direction velocity', zorder=3)
-    fig.scatter(e,f, s=60, label='y direction velocity', zorder=3)
-    fig.set_xlabel('longitude [degrees]')
-    fig.set_ylabel('latitude [degrees]')
-    fig.legend(loc=1, framealpha =1)
-    return fig
-
 def compute_spatial_steps(lon, lat, bounds=(1e2,1e4), fill_value=1e12):
     """
     Compute dx and dy spatial steps of a grid defined by lon, lat.
     It makes use of the distance-on-a-sphere formula with Taylor expansion approximations of cos and arccos functions
     to avoid truncation issues.
     Inputs: lon, lat: 2D arrays [ny,nx]
-            bounds: range of acceptable values. out of this range, set to fill_value
+    bounds: range of acceptable values. out of this range, set to fill_value
     Outputs: dx[ny,nx-1], dy[ny-1,nx]: 2D arrays
     """
     dx, dy = np.zeros_like(lon), np.zeros_like(lon)
