@@ -30,4 +30,7 @@ Before using the code, it is important to verify the path to the netCDF files an
 
 The default method to solving the problem is the new gradient-based approach. To use the iterative method, you need to change the variable "method" in "Processor.py", function "solve_model", to "1".
 
+The files containing the data used during the implementation of the code can be found using the following link:
+https://1drv.ms/f/s!Aq7KsFIdmDGepjO6G6jsZPTmxaMo?e=EATEmQ
+
 This repository also contains a notebook demonstrating the basic functionalities of the code.
