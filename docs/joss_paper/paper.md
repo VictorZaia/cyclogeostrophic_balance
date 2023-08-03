@@ -134,13 +134,23 @@ In the case of this study, the loss function $J$ will depend on two variables, u
 
 In this section, we will demonstrate an example of using the software with data from the eNATL60 configuration of the NEMO ocean circulation model, specifically in the Mediterranean Sea. The data used in this example is available in the [cyclogeostrophic balance repository](https://github.com/VictorZaia/cyclogeostrophic_balance).
 
-Before presenting the results themselves, the data to be treated will be presented. Figure 1 shows the simulation of the zonal and meridional velocity components, which will be used for comparison with the software, and the measurement of the sea surface height (SSH) needed to compute the geostrophic velocity. [Plot of the currents: (a) zonal velocity; (b) meridional velocity and (c) Sea surface height. \label{fig:Plot_full_data}](plot_full_data.png)
+Before presenting the results themselves, the data to be treated will be presented. Figure 1 shows the simulation of the zonal and meridional velocity components, which will be used for comparison with the software, and the measurement of the sea surface height (SSH) needed to compute the geostrophic velocity.
 
-\autoref{fig:cyclogeostrophic_balance_grad} presents the results found for the cyclogeostrophic velocities using the gradient descent-based approach. [ Plot of the cyclogeostrophic balance using the gradient descent algorithm: (a) zonal and (b) meridional velocities. \label{fig:cyclogeostrophic_balance_grad}](cyclogeostrophic_balance_grad.png)
+![Plot of the currents: (a) zonal velocity; (b) meridional velocity and (c) Sea surface height. \label{fig:Plot_full_data}](plot_full_data.png)
+
+\autoref{fig:cyclogeostrophic_balance_grad} presents the results found for the cyclogeostrophic velocities using the gradient descent-based approach.
+
+![Plot of the cyclogeostrophic balance using the gradient descent algorithm: (a) zonal and (b) meridional velocities. \label{fig:cyclogeostrophic_balance_grad}](cyclogeostrophic_balance_grad.png)
     
-As already stated, the cyclogeostrophic balance considers the nonlinear advective term in its equation. Therefore, it is of paramount importance to verify if the results that were found converged, namely, in this case, $J_T \to 0$. Figure 3 shows the number of iterations in relation to the total loss, yielding the conclusion that the algorithm converged. [Convergence of the loss during the gradient descent algorithm. \label{fig:convergence_loss}](convergence_loss.png)
+As already stated, the cyclogeostrophic balance considers the nonlinear advective term in its equation. Therefore, it is of paramount importance to verify if the results that were found converged, namely, in this case, $J_T \to 0$. Figure 3 shows the number of iterations in relation to the total loss, yielding the conclusion that the algorithm converged.
 
-\autoref{cyclogeostrophy_enatl_diff_methods_u} and \autoref{cyclogeostrophy_enatl_diff_methods_v} show a comparison between the results obtained using the iterative method and the gradient descent method with the data from eNATL60. The differences in zonal and meridional velocities are shown, demonstrating the improvement achieved with the new method. [Comparing the eNATL60 results with: (a) zonal iterative method's velocity and  (b) zonal gradient descent method's velocity. \label{fig:cyclogeostrophy_diff_methods_u}](cyclogeostrophy_diff_methods_u.png) [Comparing the eNATL60 results with: (a) meridional iterative method's velocity and  (b) meridional gradient descent method's velocity. \label{fig:cyclogeostrophy_diff_methods_v}](cyclogeostrophy_diff_methods_v.png)
+![Convergence of the loss during the gradient descent algorithm. \label{fig:convergence_loss}](convergence_loss.png)
+
+\autoref{cyclogeostrophy_enatl_diff_methods_u} and \autoref{cyclogeostrophy_enatl_diff_methods_v} show a comparison between the results obtained using the iterative method and the gradient descent method with the data from eNATL60. The differences in zonal and meridional velocities are shown, demonstrating the improvement achieved with the new method.
+
+![Comparing the eNATL60 results with: (a) zonal iterative method's velocity and  (b) zonal gradient descent method's velocity. \label{fig:cyclogeostrophy_diff_methods_u}](cyclogeostrophy_diff_methods_u.png)
+
+![Comparing the eNATL60 results with: (a) meridional iterative method's velocity and  (b) meridional gradient descent method's velocity. \label{fig:cyclogeostrophy_diff_methods_v}](cyclogeostrophy_diff_methods_v.png)
 
 # Conclusion
 
