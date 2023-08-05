@@ -34,3 +34,7 @@ The files containing the data used during the implementation of the code can be 
 https://1drv.ms/f/s!Aq7KsFIdmDGepjMT6o77ko-JRRZu?e=hpxeKa
 
 This repository also contains a notebook demonstrating the basic functionalities of the code.
+
+## License
+
+Copyright 2023. See [LICENSE](https://github.com/VictorZaia/cyclogeostrophic_balance/blob/main/LICENSE) for additional details.
